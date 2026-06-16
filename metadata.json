@@ -1,0 +1,6 @@
+{
+  "name": "Tatsuo - Premium Video Editor Portfolio",
+  "description": "Minimal, cinematic portfolio website for a professional video editor.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
