@@ -5,9 +5,12 @@ import { useLanguage } from '@/lib/LanguageContext';
 import { Play } from 'lucide-react';
 import Image from 'next/image';
 import { motion } from 'motion/react';
+import { useState } from 'react';
 
 export function ProjectCard({ project, onClick }: { project: Project; onClick: (project: Project) => void }) {
-  const { lang, t } = useLanguage();
+  const { lang } = useLanguage();
+  const [imgSrc, setImgSrc] = useState(project.thumbnail);
+  const [errorCount, setErrorCount] = useState(0);
 
   const isVertical = project.format === 'vertical';
 
@@ -22,9 +25,22 @@ export function ProjectCard({ project, onClick }: { project: Project; onClick: (
       <button onClick={() => onClick(project)} className="block relative w-full h-full text-left">
         <div className={`relative w-full ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} overflow-hidden`}>
           <Image
-            src={project.thumbnail}
+            src={imgSrc}
             alt={project.title}
             fill
+            unoptimized
+            onError={() => {
+              if (errorCount === 0) {
+                setImgSrc(`https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`);
+                setErrorCount(1);
+              } else if (errorCount === 1) {
+                setImgSrc(`https://i.ytimg.com/vi/${project.youtubeId}/mqdefault.jpg`);
+                setErrorCount(2);
+              } else if (errorCount === 2) {
+                setImgSrc(`https://i.ytimg.com/vi/${project.youtubeId}/0.jpg`);
+                setErrorCount(3);
+              }
+            }}
             className="object-cover transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />

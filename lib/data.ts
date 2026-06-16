@@ -74,8 +74,8 @@ export const projects: Project[] = rawLinks.map((url, index) => {
     category: isVertical 
       ? { en: 'Shorts / TikTok', pt: 'Shorts / TikTok' }
       : { en: 'YouTube Video', pt: 'Vídeo para YouTube' },
-    // Use hqdefault as it's more reliable for shorts than maxresdefault
-    thumbnail: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+    // Use maxresdefault for best quality, especially for vertical shorts
+    thumbnail: `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`,
     format: isVertical ? 'vertical' : 'horizontal',
     youtubeUrl: url,
   };
