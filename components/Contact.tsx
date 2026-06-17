@@ -21,19 +21,35 @@ export function Contact() {
             {t('contactTitle')}
           </h2>
           
-          <a 
-            href="https://wa.me/5519991210915"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group flex border border-neutral-800 hover:border-white transition-colors duration-500 rounded-full pl-8 pr-2 py-2 items-center gap-6 bg-black"
-          >
-            <span className="text-sm md:text-base uppercase tracking-widest font-medium group-hover:text-neutral-300 transition-colors duration-500">
-              {t('contactCTA')}
-            </span>
-            <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-95 group-hover:bg-neutral-200 transition-all duration-500">
-              <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" />
-            </div>
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4">
+            <a 
+              href="https://wa.me/5519991210915"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex border border-neutral-800 hover:border-white transition-colors duration-500 rounded-full pl-8 pr-2 py-2 items-center gap-6 bg-black"
+            >
+              <span className="text-sm md:text-base uppercase tracking-widest font-medium group-hover:text-neutral-300 transition-colors duration-500">
+                {t('contactCTA')}
+              </span>
+              <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-95 group-hover:bg-neutral-200 transition-all duration-500">
+                <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" />
+              </div>
+            </a>
+
+            <a 
+              href="https://twitter.com/messages/compose?recipient_id=1725995255055388672"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group flex border border-neutral-800 hover:border-white transition-colors duration-500 rounded-full pl-8 pr-2 py-2 items-center gap-6 bg-black"
+            >
+              <span className="text-sm md:text-base uppercase tracking-widest font-medium group-hover:text-neutral-300 transition-colors duration-500">
+                {t('contactTwitter')}
+              </span>
+              <div className="w-12 h-12 rounded-full bg-white text-black flex items-center justify-center group-hover:scale-95 group-hover:bg-neutral-200 transition-all duration-500">
+                <ArrowUpRight className="w-5 h-5 group-hover:rotate-12 transition-transform duration-500" />
+              </div>
+            </a>
+          </div>
         </motion.div>
       </div>
     </section>

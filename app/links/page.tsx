@@ -9,6 +9,10 @@ const links = [
     url: 'https://api.whatsapp.com/send/?phone=5519991210915&text=Eai+Tatsuo%2C+vi+seu+trabalho+e+gostaria+de+conversar%21&type=phone_number&app_absent=0',
   },
   {
+    title: 'Twitter',
+    url: 'https://twitter.com/messages/compose?recipient_id=1725995255055388672',
+  },
+  {
     title: 'Portfolio',
     url: 'https://www.tatsuosaka.com/',
   },
