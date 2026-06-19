@@ -11,21 +11,21 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'Tatsuo | Video Editor',
-  description: 'Portfólio de edição de vídeo profissional por Tatsuo. Edição cinematográfica, dinâmica e focada em retenção para YouTube, TikTok e redes sociais.',
+  description: 'Professional video editing portfolio featuring ads, podcasts, influencers, and branded content.',
   keywords: ['video editor', 'editor de vídeo', 'premiere pro', 'after effects', 'youtube editor', 'tiktok editor', 'tatsuo', 'audiovisual', 'retenção', 'edição cinematográfica'],
   authors: [{ name: 'Tatsuo' }],
   creator: 'Tatsuo',
   publisher: 'Tatsuo',
   openGraph: {
     title: 'Tatsuo | Video Editor',
-    description: 'Portfólio de edição de vídeo profissional por Tatsuo. Edição cinematográfica, dinâmica e focada em retenção para YouTube, TikTok e redes sociais.',
-    url: 'https://tatsuosaka.com',
+    description: 'Professional video editing portfolio featuring ads, podcasts, influencers, and branded content.',
+    url: 'https://www.tatsuosaka.com/',
     siteName: 'Tatsuo | Video Editor',
     images: [
       {
-        url: 'https://i.ytimg.com/vi/FWU6eZ0eTso/maxresdefault.jpg', // Using one of the project thumbnails as an OG image
-        width: 1280,
-        height: 720,
+        url: '/og-image.jpg', // Replace with your image URL when ready
+        width: 1200,
+        height: 630,
         alt: 'Tatsuo | Video Editor',
       },
     ],
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Tatsuo | Video Editor',
-    description: 'Portfólio de edição de vídeo profissional. Focado em retenção para YouTube e redes sociais.',
-    images: ['https://i.ytimg.com/vi/FWU6eZ0eTso/maxresdefault.jpg'],
+    description: 'Professional video editing portfolio featuring ads, podcasts, influencers, and branded content.',
+    images: ['/og-image.jpg'], // Replace with your image URL when ready
   },
   robots: {
     index: true,
