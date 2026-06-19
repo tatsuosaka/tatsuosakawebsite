@@ -2,6 +2,53 @@
 
 import { useLanguage } from '@/lib/LanguageContext';
 import { motion } from 'motion/react';
+import { useState, useCallback, useEffect } from 'react';
+
+const CHARS = '!<>-_\\/[]{}—=+*^?#________';
+
+function ScrambleText({ text }: { text: string }) {
+  const [displayText, setDisplayText] = useState(text);
+  const [isScrambling, setIsScrambling] = useState(false);
+
+  const scramble = useCallback(() => {
+    if (isScrambling) return;
+    setIsScrambling(true);
+
+    let iteration = 0;
+    
+    const interval = setInterval(() => {
+      setDisplayText(prev => 
+        prev.split('')
+          .map((char, index) => {
+            if (index < iteration / 2) return text[index];
+            return CHARS[Math.floor(Math.random() * CHARS.length)];
+          })
+          .join('')
+      );
+      
+      if (iteration >= text.length * 2) {
+        clearInterval(interval);
+        setDisplayText(text);
+        setIsScrambling(false);
+      }
+      
+      iteration += 1;
+    }, 30);
+  }, [text, isScrambling]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      scramble();
+    }, 6000);
+    return () => clearInterval(interval);
+  }, [scramble]);
+
+  return (
+    <span onMouseEnter={scramble} className="inline-block" style={{ width: '100%' }}>
+      {displayText}
+    </span>
+  );
+}
 
 export function Hero() {
   const { t } = useLanguage();
@@ -45,7 +92,7 @@ export function Hero() {
           variants={item} 
           className="text-[15vw] md:text-[12vw] leading-[0.85] tracking-tighter uppercase font-medium -ml-[0.04em]"
         >
-          {t('heroTitle')}
+          <ScrambleText text={t('heroTitle')} />
         </motion.h1>
 
         <div className="mt-12 md:mt-24 grid grid-cols-1 md:grid-cols-2 w-full gap-8 md:gap-0">
