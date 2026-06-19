@@ -10,6 +10,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://www.tatsuosaka.com/'),
   title: 'Tatsuo | Video Editor',
   description: 'Professional video editing portfolio featuring ads, podcasts, influencers, and branded content.',
   keywords: ['video editor', 'editor de vídeo', 'premiere pro', 'after effects', 'youtube editor', 'tiktok editor', 'tatsuo', 'audiovisual', 'retenção', 'edição cinematográfica'],
@@ -23,9 +24,9 @@ export const metadata: Metadata = {
     siteName: 'Tatsuo | Video Editor',
     images: [
       {
-        url: '/og-image.jpg', // Replace with your image URL when ready
-        width: 1200,
-        height: 630,
+        url: 'https://pbs.twimg.com/profile_banners/1725995255055388672/1736521676', // Replace with your image URL when ready
+        width: 1500,
+        height: 500,
         alt: 'Tatsuo | Video Editor',
       },
     ],
@@ -36,7 +37,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'Tatsuo | Video Editor',
     description: 'Professional video editing portfolio featuring ads, podcasts, influencers, and branded content.',
-    images: ['/og-image.jpg'], // Replace with your image URL when ready
+    images: ['https://pbs.twimg.com/profile_banners/1725995255055388672/1736521676'], // Replace with your image URL when ready
   },
   robots: {
     index: true,
