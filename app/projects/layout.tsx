@@ -1,19 +1,18 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Projetos | Tatsuo',
-  description: 'Confira meu portfólio completo de edição de vídeo. Trabalhos para YouTube, Shorts, TikTok e vídeos institucionais.',
+  title: 'Todos os Projetos',
+  description: 'Catálogo completo de trabalhos de edição de vídeo por Tatsuo: anúncios comerciais, vídeos para YouTube e conteúdos dinâmicos de gaming.',
+  alternates: {
+    canonical: 'https://tatsuosaka.com/projects',
+  },
   openGraph: {
-    title: 'Projetos | Tatsuo',
-    description: 'Confira meu portfólio completo de edição de vídeo. Trabalhos para YouTube, Shorts, TikTok e vídeos institucionais.',
+    title: 'Todos os Projetos | Tatsuo - Video Editor',
+    description: 'Catálogo completo de trabalhos de edição de vídeo por Tatsuo: anúncios comerciais, vídeos para YouTube e conteúdos dinâmicos de gaming.',
     url: 'https://tatsuosaka.com/projects',
   },
 };
 
-export default function ProjectsLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function ProjectsLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

@@ -22,13 +22,19 @@ export function ProjectCard({ project, onClick }: { project: Project; onClick: (
       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
       className="group relative w-full mb-6 max-sm:mb-4 overflow-hidden bg-neutral-900 break-inside-avoid"
     >
-      <button onClick={() => onClick(project)} className="block relative w-full h-full text-left">
+      <button 
+        onClick={() => onClick(project)} 
+        className="block relative w-full h-full text-left"
+        aria-label={`Assistir projeto: ${project.title} (${project.category[lang]})`}
+      >
         <div className={`relative w-full ${isVertical ? 'aspect-[9/16]' : 'aspect-video'} overflow-hidden`}>
           <Image
             src={imgSrc}
             alt={project.title}
             fill
-            unoptimized
+            loading="lazy"
+            decoding="async"
+            referrerPolicy="no-referrer"
             onError={() => {
               if (errorCount === 0) {
                 setImgSrc(`https://i.ytimg.com/vi/${project.youtubeId}/hqdefault.jpg`);
@@ -42,7 +48,7 @@ export function ProjectCard({ project, onClick }: { project: Project; onClick: (
               }
             }}
             className="object-cover transition-transform duration-700 ease-[0.16,1,0.3,1] group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
           />
           {/* Subtle overlay */}
           <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

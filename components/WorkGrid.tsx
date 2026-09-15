@@ -15,12 +15,15 @@ export function WorkGrid() {
   const { t } = useLanguage();
   const [shuffledProjects, setShuffledProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [filter, setFilter] = useState<FilterType>('all');
+  const [filter, setFilter] = useState<FilterType>('commercial');
 
   useEffect(() => {
     // Randomize projects on client to avoid hydration mismatch
-    const shuffled = [...projects].sort(() => 0.5 - Math.random());
-    setShuffledProjects(shuffled);
+    const timer = setTimeout(() => {
+      const shuffled = [...projects].sort(() => 0.5 - Math.random());
+      setShuffledProjects(shuffled);
+    }, 0);
+    return () => clearTimeout(timer);
   }, []);
 
   const filteredProjects = shuffledProjects

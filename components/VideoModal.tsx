@@ -36,6 +36,7 @@ export function VideoModal({
         >
           <button 
             onClick={onClose}
+            aria-label="Fechar modal de vídeo"
             className="absolute top-6 right-6 md:top-12 md:right-12 z-[110] p-4 text-white hover:text-neutral-400 transition-colors"
           >
             <X className="w-8 h-8" />
