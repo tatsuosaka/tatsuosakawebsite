@@ -68,6 +68,7 @@ export function Hero() {
     start: 0,
     isVertical: false,
   });
+  const [isVideoReady, setIsVideoReady] = useState(false);
   const iframe1Ref = useRef<HTMLIFrameElement>(null);
   const iframe2Ref = useRef<HTMLIFrameElement>(null);
 
@@ -97,6 +98,7 @@ export function Hero() {
           start: Math.floor(Math.random() * 50) + 10,
         });
       }
+      setIsVideoReady(false);
     }, 0);
 
     return () => clearTimeout(timer);
@@ -106,6 +108,7 @@ export function Hero() {
     [iframe1Ref.current, iframe2Ref.current].forEach((iframe) => {
       if (!iframe || !iframe.contentWindow) return;
       try {
+        iframe.contentWindow.postMessage(JSON.stringify({ event: 'listening' }), '*');
         iframe.contentWindow.postMessage(
           JSON.stringify({ event: 'command', func: 'unloadModule', args: ['captions'] }),
           '*'
@@ -123,6 +126,32 @@ export function Hero() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      try {
+        const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+        // playerState 1 = PLAYING (video has started playback, safe to reveal)
+        if (data?.event === 'infoDelivery' && data?.info?.playerState === 1) {
+          setIsVideoReady(true);
+        }
+      } catch {
+        // ignore
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+
+    // Fallback: fade-in after 1.2s to hide the initial YouTube play button flash
+    const fallbackTimer = setTimeout(() => {
+      setIsVideoReady(true);
+    }, 1200);
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      clearTimeout(fallbackTimer);
+    };
+  }, [videoConfig.id, videoConfig.secondaryId]);
 
   useEffect(() => {
     const timers = [
@@ -167,7 +196,9 @@ export function Hero() {
             {/* Left Video (full width on mobile, half on desktop) */}
             <div className="relative flex-1 w-full h-full overflow-hidden">
               <div 
-                className="absolute inset-0 bg-cover bg-center opacity-40 blur-[3px] scale-110 md:scale-[1.75]"
+                className={`absolute inset-0 bg-cover bg-center blur-[3px] scale-110 md:scale-[1.75] transition-opacity duration-1000 ${
+                  isVideoReady ? 'opacity-30' : 'opacity-60'
+                }`}
                 style={{ backgroundImage: `url(https://i.ytimg.com/vi/${videoConfig.id}/hqdefault.jpg)` }}
               />
               <iframe
@@ -175,7 +206,9 @@ export function Hero() {
                 key={`v1-${videoConfig.id}-${videoConfig.start}`}
                 onLoad={disableCaptionsAndSeek}
                 loading="eager"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-full min-w-full min-h-[56.25vw] pointer-events-none border-0 blur-[3px] scale-110 md:scale-[1.75]"
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-full min-w-full min-h-[56.25vw] pointer-events-none border-0 blur-[3px] scale-110 md:scale-[1.75] transition-opacity duration-1000 ease-out ${
+                  isVideoReady ? 'opacity-100' : 'opacity-0'
+                }`}
                 src={`https://www.youtube.com/embed/${videoConfig.id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoConfig.id}&start=${videoConfig.start}&playsinline=1&rel=0&showinfo=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&cc_lang_pref=off&enablejsapi=1`}
                 title="Hero vertical video 1"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -186,7 +219,9 @@ export function Hero() {
             {/* Right Video (hidden on mobile, visible on md+) */}
             <div className="relative hidden md:block flex-1 h-full overflow-hidden">
               <div 
-                className="absolute inset-0 bg-cover bg-center opacity-40 blur-[3px] scale-[1.75]"
+                className={`absolute inset-0 bg-cover bg-center blur-[3px] scale-[1.75] transition-opacity duration-1000 ${
+                  isVideoReady ? 'opacity-30' : 'opacity-60'
+                }`}
                 style={{ backgroundImage: `url(https://i.ytimg.com/vi/${videoConfig.secondaryId}/hqdefault.jpg)` }}
               />
               <iframe
@@ -194,8 +229,10 @@ export function Hero() {
                 key={`v2-${videoConfig.secondaryId}-${videoConfig.secondaryStart}`}
                 onLoad={disableCaptionsAndSeek}
                 loading="eager"
-                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-full min-w-full min-h-[56.25vw] pointer-events-none border-0 blur-[3px] scale-[1.75]"
-                src={`https://www.youtube.com/embed/${videoConfig.secondaryId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoConfig.secondaryId}&start=${videoConfig.secondaryStart}&playsinline=1&rel=0&showinfo=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_lang_pref=off&enablejsapi=1`}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[177.78vh] h-full min-w-full min-h-[56.25vw] pointer-events-none border-0 blur-[3px] scale-[1.75] transition-opacity duration-1000 ease-out ${
+                  isVideoReady ? 'opacity-100' : 'opacity-0'
+                }`}
+                src={`https://www.youtube.com/embed/${videoConfig.secondaryId}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoConfig.secondaryId}&start=${videoConfig.secondaryStart}&playsinline=1&rel=0&showinfo=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&cc_lang_pref=off&enablejsapi=1`}
                 title="Hero vertical video 2"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 tabIndex={-1}
@@ -206,7 +243,9 @@ export function Hero() {
           /* Single horizontal video */
           <>
             <div 
-              className="absolute inset-0 bg-cover bg-center opacity-40 blur-[3px] scale-120"
+              className={`absolute inset-0 bg-cover bg-center blur-[3px] scale-120 transition-opacity duration-1000 ${
+                isVideoReady ? 'opacity-30' : 'opacity-60'
+              }`}
               style={{ backgroundImage: `url(https://i.ytimg.com/vi/${videoConfig.id}/hqdefault.jpg)` }}
             />
             <iframe
@@ -214,7 +253,9 @@ export function Hero() {
               key={`h-${videoConfig.id}-${videoConfig.start}`}
               onLoad={disableCaptionsAndSeek}
               loading="eager"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[56.25vw] min-h-full min-w-[177.78vh] scale-120 pointer-events-none border-0 blur-[3px]"
+              className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[100vw] h-[56.25vw] min-h-full min-w-[177.78vh] scale-120 pointer-events-none border-0 blur-[3px] transition-opacity duration-1000 ease-out ${
+                isVideoReady ? 'opacity-100' : 'opacity-0'
+              }`}
               src={`https://www.youtube.com/embed/${videoConfig.id}?autoplay=1&mute=1&controls=0&loop=1&playlist=${videoConfig.id}&start=${videoConfig.start}&playsinline=1&rel=0&showinfo=0&disablekb=1&fs=0&iv_load_policy=3&modestbranding=1&cc_load_policy=0&cc_lang_pref=off&enablejsapi=1`}
               title="Hero background video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
